@@ -6,16 +6,12 @@
         android:id="@+id/action_addUser"
         android:orderInCategory="100"
         android:title="Add User"
-        app:showAsAction="collapseActionView">
-
-    </item>
+        app:showAsAction="collapseActionView" />
 
     <item
         android:id="@+id/action_exitAdmin"
         android:orderInCategory="1000"
         android:title="Sign Out"
-        app:showAsAction="collapseActionView">
-
-    </item>
+        app:showAsAction="collapseActionView" />
 
 </menu>
