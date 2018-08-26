@@ -24,14 +24,14 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:hint="First Name"
-            android:inputType="textPassword" />
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/edt_usr_last-name"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:hint="Last Name"
-            android:inputType="textPassword" />
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/edt_usr_Email"

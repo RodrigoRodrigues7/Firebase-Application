@@ -9,12 +9,11 @@ public class FirebaseConfig {
     private static DatabaseReference firebaseReference;
     private static FirebaseAuth authentication;
 
-    public static DatabaseReference getFirebase() {
+    public static DatabaseReference getFirebaseDatabase() {
 
         if (firebaseReference == null) {
             firebaseReference = FirebaseDatabase.getInstance().getReference();
         }
-
         return firebaseReference;
     }
 
@@ -23,7 +22,6 @@ public class FirebaseConfig {
         if (authentication == null) {
             authentication = FirebaseAuth.getInstance();
         }
-
         return authentication;
     }
 

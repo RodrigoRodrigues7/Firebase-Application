@@ -39,4 +39,11 @@
         android:layout_marginTop="35dp"
         android:text="Log In" />
 
+    <ProgressBar
+        android:id="@+id/progressBarID"
+        style="?android:attr/progressBarStyleLargeInverse"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_gravity="center" />
+
 </LinearLayout>

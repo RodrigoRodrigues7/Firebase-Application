@@ -1,21 +1,14 @@
 package com.example.android.first_firebase_application.Classes;
 
+import com.google.firebase.database.Exclude;
+
 public class User {
 
-    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private String userType;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -41,10 +34,12 @@ public class User {
         this.email = email;
     }
 
+    @Exclude
     public String getPassword() {
         return password;
     }
 
+    @Exclude
     public void setPassword(String password) {
         this.password = password;
     }

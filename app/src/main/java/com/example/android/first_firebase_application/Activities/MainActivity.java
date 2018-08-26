@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.first_firebase_application.Classes.User;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtEmailLogin;
     private EditText edtPasswordLogin;
     private Button btnLogin;
+    private ProgressBar spinner;
 
     private User user;
 
@@ -35,28 +38,42 @@ public class MainActivity extends AppCompatActivity {
         edtPasswordLogin = findViewById(R.id.edt_Password);
         btnLogin = findViewById(R.id.btn_Log_in);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        spinner = findViewById(R.id.progressBarID);
+        spinner.setVisibility(View.GONE);
 
-                if(!edtEmailLogin.getText().toString().trim().equals("") && !edtPasswordLogin.getText().toString().trim().equals("")) {
+        if (verifyLoggedUser()) {
 
-                    user = new User();
+            Intent intentAccount = new Intent(MainActivity.this, TelaPrincipal.class);
+            openNewActivity(intentAccount);
 
-                    user.setEmail(edtEmailLogin.getText().toString());
-                    user.setPassword(edtPasswordLogin.getText().toString());
+        } else {
 
-                    validateLogin();
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                } else {
-                    Toast.makeText(MainActivity.this, "Please, Fill in the E-mail and Password Fields!", Toast.LENGTH_SHORT).show();
+                    if (!edtEmailLogin.getText().toString().trim().equals("") && !edtPasswordLogin.getText().toString().trim().equals("")) {
+
+                        user = new User();
+
+                        user.setEmail(edtEmailLogin.getText().toString());
+                        user.setPassword(edtPasswordLogin.getText().toString());
+
+                        validateLogin();
+                        spinner.setVisibility(View.VISIBLE);
+
+                    } else {
+                        Toast.makeText(MainActivity.this, "Please, Fill in the E-mail and Password Fields!", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
+            });
 
-            }
-        });
+        }
 
     }
 
+    //Método para autenticar o login do usuário
     private void validateLogin() {
 
         authentication = FirebaseConfig.getFirebaseAuth();
@@ -64,10 +81,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
 
-                    openAdmScreen();
-
+                    openMainScreen();
                     Toast.makeText(MainActivity.this, "Successful Log-In", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -79,12 +95,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void openAdmScreen() {
+    //Método que inicia a activity de tela Principal
+    private void openMainScreen() {
 
-        Intent intent = new Intent(MainActivity.this, CadastroUsuario.class);
+        Intent intent = new Intent(MainActivity.this, TelaPrincipal.class);
         startActivity(intent);
+    }
+
+    //Método para verificar se o usuário já está logado
+    public Boolean verifyLoggedUser() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
+    //Método genérico para abrir uma activity
+    public void openNewActivity(Intent intent) {
+        startActivity(intent);
+    }
 
 }
