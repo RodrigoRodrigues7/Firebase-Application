@@ -26,10 +26,17 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.0'
 
-    //Library para poder usar as funções do Firebase
+    //Para poder usar as funções do Firebase
     implementation 'com.google.firebase:firebase-auth:16.0.3'
-    //Library para poder utilizar o banco de dados
+
+    //Para poder utilizar o banco de dados
     implementation 'com.google.firebase:firebase-database:16.0.1'
+
+    //Para poder utilizar o armazenamento de arquivos
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+
+    //Para utilizar o Picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     testImplementation 'junit:junit:4.12'
 

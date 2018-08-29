@@ -1,5 +1,6 @@
 package com.example.android.first_firebase_application.Activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.android.first_firebase_application.Classes.User;
 import com.example.android.first_firebase_application.DAO.FirebaseConfig;
+import com.example.android.first_firebase_application.Helper.Preferences;
 import com.example.android.first_firebase_application.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -75,8 +77,7 @@ public class CadastroUsuario extends AppCompatActivity {
                         user.setUserType("Attendant");
                     }
 
-                    registeringNewUser();
-                    clearTextFields();
+                    registerNewUser();
 
                 } else {
                     Toast.makeText(CadastroUsuario.this, "Please, Check if your Password is Correct!", Toast.LENGTH_SHORT).show();
@@ -91,13 +92,12 @@ public class CadastroUsuario extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
             }
         });
 
     }
 
-    private void registeringNewUser() {
+    private void registerNewUser() {
 
         auth = FirebaseConfig.getFirebaseAuth();
         auth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword()).addOnCompleteListener(CadastroUsuario.this, new OnCompleteListener<AuthResult>() {
@@ -107,6 +107,11 @@ public class CadastroUsuario extends AppCompatActivity {
                 if (task.isSuccessful()) {
 
                     insertUser(user);
+                    finish();
+
+                    auth.signOut();
+                    openMainScreen();
+
                 } else {
 
                     String error = "";
@@ -148,15 +153,32 @@ public class CadastroUsuario extends AppCompatActivity {
 
     }
 
-    private void clearTextFields() {
+    private void openMainScreen() {
 
-        firstName.setText("");
-        lastName.setText("");
-        email.setText("");
-        password.setText("");
-        confirmPassword.setText("");
-        rbAdmin.setChecked(false);
-        rbAttendant.setChecked(false);
+        auth = FirebaseConfig.getFirebaseAuth();
+        Preferences preferences = new Preferences(CadastroUsuario.this);
+
+        auth.signInWithEmailAndPassword(preferences.getLoggedUserEmail(), preferences.getLoggedUserPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if (task.isSuccessful()) {
+                    Intent intent = new Intent(CadastroUsuario.this, TelaPrincipal.class);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+
+                    Toast.makeText(CadastroUsuario.this, "Falha!", Toast.LENGTH_LONG).show();
+                    auth.signOut();
+
+                    Intent intent = new Intent(CadastroUsuario.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+        });
 
     }
 

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.android.first_firebase_application.Classes.User;
 import com.example.android.first_firebase_application.DAO.FirebaseConfig;
+import com.example.android.first_firebase_application.Helper.Preferences;
 import com.example.android.first_firebase_application.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -82,10 +83,12 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
-
                     openMainScreen();
-                    Toast.makeText(MainActivity.this, "Successful Log-In", Toast.LENGTH_SHORT).show();
 
+                    Preferences preferences = new Preferences(MainActivity.this);
+                    preferences.saveUserPreferences(user.getEmail(), user.getPassword());
+
+                    Toast.makeText(MainActivity.this, "Successful Log-In", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "Invalid User or Password, Try Again!", Toast.LENGTH_SHORT).show();
                 }
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
     private void openMainScreen() {
 
         Intent intent = new Intent(MainActivity.this, TelaPrincipal.class);
+        finish();
         startActivity(intent);
     }
 

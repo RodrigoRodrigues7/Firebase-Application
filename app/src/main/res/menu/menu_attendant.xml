@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_cad_Photo_attendant_profile"
+        android:orderInCategory="100"
+        android:title="Profile Photo"
+        app:showAsAction="collapseActionView" />
+
+    <item
         android:id="@+id/action_exitAttendant"
         android:orderInCategory="1000"
         android:title="Sign Out"

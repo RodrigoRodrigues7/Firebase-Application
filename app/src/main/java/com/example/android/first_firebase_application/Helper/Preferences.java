@@ -3,11 +3,12 @@ package com.example.android.first_firebase_application.Helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-//Esta classe será usada para que quando um admin salvar um novo usuário, ele possa permaneçer logado no sistema
+//Esta classe irá salvar, no celular, as preferencias do usuário logado no app
+//Nome do Arquivo = "app.preferences"
 public class Preferences {
 
     private Context context;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences preferences;
     private String FILE_NAME = "app.preferences";
     private int MODE = 0; //Para editar o arquivo(FILE_NAME) que ficará salvo no celular
     private SharedPreferences.Editor editor;
@@ -16,15 +17,16 @@ public class Preferences {
     private final String LOGGED_USER_PASSWORD = "logged_UserPassword";
 
     public Preferences(Context parameterContext) {
-        this.context = parameterContext;
+        context = parameterContext;
+        preferences = context.getSharedPreferences(FILE_NAME, MODE);
 
         //Associar o nosso 'preference.edit()' com  o editor
-        editor = sharedPreferences.edit();
+        editor = preferences.edit();
     }
 
     public void saveUserPreferences(String email, String password) {
 
-        //Salvar no arquivo de preferencias o email do usuário e a senha
+        //Salvar no arquivo de preferencias o email e a senha do usuário
         editor.putString(LOGGED_USER_EMAIL, email);
         editor.putString(LOGGED_USER_PASSWORD, password);
         editor.commit();
@@ -32,11 +34,11 @@ public class Preferences {
     }
 
     public String getLoggedUserEmail() {
-        return sharedPreferences.getString(LOGGED_USER_PASSWORD, null);
+        return preferences.getString(LOGGED_USER_EMAIL, null);
     }
 
     public String getLoggedUserPassword() {
-        return sharedPreferences.getString(LOGGED_USER_PASSWORD, null);
+        return preferences.getString(LOGGED_USER_PASSWORD, null);
     }
 
 }

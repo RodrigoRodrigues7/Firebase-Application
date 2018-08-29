@@ -90,6 +90,8 @@ public class TelaPrincipal extends AppCompatActivity {
             signOut();
         } else if (id == R.id.action_exitAttendant) {
             signOut();
+        } else if (id == R.id.action_cad_Photo_attendant_profile) {
+            uploadProfilePhoto();
         }
 
         return super.onOptionsItemSelected(item);
@@ -98,6 +100,14 @@ public class TelaPrincipal extends AppCompatActivity {
     private void openUserRegisterScreen() {
         Intent intent = new Intent(TelaPrincipal.this, CadastroUsuario.class);
         startActivity(intent);
+    }
+
+    private void uploadProfilePhoto() {
+
+        Intent intent = new Intent(TelaPrincipal.this, UploadPhoto.class);
+        startActivity(intent);
+        finish();
+
     }
 
     private void signOut() {
